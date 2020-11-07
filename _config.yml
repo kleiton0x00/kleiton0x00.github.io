@@ -8,14 +8,12 @@
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 #--------------------------
 
-title: Chirpy                          # the main title
+title: kleiton0x00                          # the main title
 
-tagline: A text-focused Jekyll theme.  # it will display as the sub-title
+tagline: Junion Pentester | Bug Hunter.  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
+  Love to share my knowledge on hacking-related stuff
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'protocol://domain'
@@ -25,21 +23,16 @@ author: your_full_name                  # change to your full name
 avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
 github:
-  username: github_username             # change to your github username
-
-twitter:
-  username: twitter_username            # change to your twitter username
+  username: kleiton0x00             # change to your github username
 
 social:
-  name: your_full_name                  # it will shows as the copyright owner in Footer
-  email: example@doamin.com             # change to your email address
+  name: Kleiton Kurti                  # it will shows as the copyright owner in Footer
+  email: kurtikleiton@gmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
+    - https://github.com/kleiton0x00       # change to your github homepage
     # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/kleiton-kurti-3210b31a2/
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
@@ -189,9 +182,9 @@ sitemap_exclude:  # Sitemap will exclude the following items.
     - /assets/
   accurate:
     - /norobots/
-    - /tabs/
-    - /categories/
-    - /tags/
+#    - /tabs/
+#    - /categories/
+#    - /tags/
     - /posts/
     - 404.html
     - feed.xml
