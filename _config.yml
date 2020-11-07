@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # The Site Settings
 # v2.0
 # https://github.com/cotes2020/jekyll-theme-chirpy
@@ -64,27 +63,6 @@ google_analytics:
     proxy_url: ''
     proxy_endpoint: ''
     cache: false  # pv data local cache, good for the users from GFW area.
-=======
-# Site Info
-title:              "Kleiton Kurti"
-description:        "A personal Publications' website."
-author_name:        "Kleiton Kurti" # change this to your name
-logo_url:           https://avatars3.githubusercontent.com/u/37262788?s=460&u=69e57233878743c48c2dbe8ff610572a3817e798&v=4 # Get it from GitHub API: https://api.github.com/users/<username>
-
-# Site Settings
-url:                https://kleiton0x00.github.io # main url
-permalink:          /:title # Post permalink
-timezone:           Europe/Berlin # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-mathjax:            true  # enables support for mathjax - set to 'false' to disable
-
-# Site Build
-highlighter:        rouge
-markdown:           kramdown
-kramdown:
-    input:          GFM
-sass:
-    style:          :compressed
->>>>>>> a318a2f4e6eb56b5e081df906255608624ac63f4
 
 disqus:
   comments: false  # boolean type, the global switch for posts comments.
