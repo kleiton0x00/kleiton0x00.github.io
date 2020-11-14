@@ -18,7 +18,7 @@ description: >-                        # used by seo meta and the atom feed
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'protocol://domain'
 
-author: your_full_name                  # change to your full name
+author: kleiton0x00                  # change to your full name
 
 avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
@@ -44,7 +44,7 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Europe/Vienna
 
 google_analytics:
   id: ''          # Fill with your Google Analytics ID
