@@ -17,7 +17,11 @@ Instead of giving a string value, let's try inputting an HTML simple payload. I 
 
 ![html_injection](https://cdn-images-1.medium.com/max/800/1*KHg8oSA8vM5gLAZnQHomdg.jpeg)
 
-Cool, we have HTML Injection, so let's try to leverage it into XSS. This time I entered the simplest XSS payload ever: <script>alert(1)</script>
+Cool, we have HTML Injection, so let's try to leverage it into XSS. This time I entered the simplest XSS payload ever: 
+```
+<script>alert(1)</script>
+```
+
 If nothing gets filtered or blocked by WAF, we will be able to trigger the Javascript payload.
 
 ![XSS_not_triggered](https://cdn-images-1.medium.com/max/800/1*AhUgcHJriQoYZfz1ugEv7w.jpeg)
@@ -95,7 +99,7 @@ Combining the first XSS we found on index and the second XSS we found on the **c
 
 This has to work, right?
 
-Our XSS payload will be based on what we found on the first XSS (**<script>alert(1)</script>**). Instead of executing a Javascript, we will load the URL of countdown.php which is:
+Our XSS payload will be based on what we found on the first XSS. Instead of executing a Javascript, we will load the URL of countdown.php which is:
 ```
 http://website.com/js/countdown.php?end=2534926825);alert(1);//
 ```
@@ -109,4 +113,3 @@ So, combining the XSS payload of the first one with the URL of the vulnerable ph
 ![xss_triggered](https://cdn-images-1.medium.com/max/800/1*gVFn-onsZ2eOsfF9N-7JBA.jpeg)
 
 We bypassed CSP and successfully executed our **alert(1)** code.
-
