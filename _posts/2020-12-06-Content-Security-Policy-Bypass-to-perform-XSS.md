@@ -1,11 +1,11 @@
 ---
-title: Content-Security-Policy Bypass to perform XSS [Bug Hunting]
+title: Content-Security-Policy Bypass to perform XSS using MIME sniffing [Bug Hunting]
 updated: 2020-12-06 17:23
 ---
 
 ## Summary
 
-Recently, I performed a Cross Site Scripting vulnerability, however a normal XSS payload wasn't being triggered because CSP was  blocking external Javascript code (XSS) being executed. By finding another XSS vulnerability in another endpoint (which again is being blocked by CSP), I managed to combine them together leading into CSP bypassing and trigger XSS.
+Recently, I performed a Cross Site Scripting vulnerability, however a normal XSS payload wasn’t being triggered because CSP was blocking external Javascript code (XSS) being executed. By finding another XSS vulnerability in another endpoint (which again is being blocked by CSP), I managed to combine them together leading into CSP bypassing and trigger XSS using MIME sniffing.
 
 ## Finding the first XSS
 
@@ -87,17 +87,15 @@ http://website.com/js/countdown.php?end=2534926825);alert(1);//
 
 When going to the given URL, no XSS is being reflected. Why? Because our XSS is being again blocked by CSP.
 
-## Bypassing CSP with 2 XSS we found
+## Bypassing CSP with 2 XSS using MIME Sniffing
 
-Combining the first XSS we found on index and the second XSS we found on the **countdown.php**, we can use both of them to bypass CSP. The workflow would be:
+It’s time to combine the first XSS we found on index page and the second XSS we found on the countdown.php.
 
-1. The XSS payload on index will load Javascript code from **countdown.php** where we injected our payload.
+Let’s see how MIME sniffing can result in a XSS vulnerability. For an attacker to perform an XSS attack by leveraging MIME sniffing, there are certain preconditions that must be fulfilled. Note that, the preconditions are both on client side:
 
-2. CSP will accept the XSS payload (the one from index) because it is loading a script from the website itself (from countdown.php, where we injected our js code)
+- The attacker should be able to control content in the server’s response so that malicious JavaScript can be injected (the second XSS which we found)
 
-3. Since **countdown.php** is loaded, our alert(1) will be triggered
-
-This has to work, right?
+- The attacker should be able to introduce an executable context via HTML injection or Javascript Injection (the first XSS which we found)
 
 Our XSS payload will be based on what we found on the first XSS. Instead of executing a Javascript, we will load the URL of countdown.php which is:
 ```
@@ -112,4 +110,4 @@ So, combining the XSS payload of the first one with the URL of the vulnerable ph
 
 ![xss_triggered](https://cdn-images-1.medium.com/max/800/1*gVFn-onsZ2eOsfF9N-7JBA.jpeg)
 
-We bypassed CSP and successfully executed our **alert(1)** code.
+We bypassed CSP and successfully executed our **alert(1)** code using MIME Sniffing.
