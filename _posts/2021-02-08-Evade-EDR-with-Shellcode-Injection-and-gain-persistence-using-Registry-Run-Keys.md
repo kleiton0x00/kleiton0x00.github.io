@@ -36,7 +36,7 @@ Once the shellcode is successfully generated, we will pack it into EXE.
 
 ## Packaging the shellcode
 
-There is a open source tool called Shecodnject which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
+There is a open source tool called [Shecodeject](https://github.com/TaroballzChen/shecodject) which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
 
 ```
 sudo python3 shecodnject.py
