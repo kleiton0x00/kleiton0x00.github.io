@@ -36,10 +36,10 @@ Once the shellcode is successfully generated, we will pack it into EXE.
 
 ## Packaging the shellcode
 
-There is a open source tool called [Shecodeject](https://github.com/TaroballzChen/shecodject) which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
+There is a open source tool called [Shecodject](https://github.com/TaroballzChen/shecodject) which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
 
 ```
-sudo python3 shecodnject.py
+sudo python3 shecodject.py
 ```
 
 Load scc module, set the shellcode.raw file which we previously generated and run the module to read the shellcode inside the file.
@@ -60,7 +60,7 @@ set noconsole False
 run
 ```
 
-The process of packaging will take a while. Once finished the output will be saved inside /output inside shecodeject folder
+The process of packaging will take a while. Once finished the output will be saved inside /output inside shecodject folder
 
 The EXE is generated and ready to evade modern EDRs and Windows Defender. Let’s test if it gets detected by Windows Defender:
 
