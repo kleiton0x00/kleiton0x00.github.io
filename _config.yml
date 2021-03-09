@@ -8,9 +8,9 @@
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 #--------------------------
 
-title: kleiton0x00                          # the main title
+title: kleiton0x7e                          # the main title
 
-tagline: Junion Pentester | Bug Hunter.  # it will display as the sub-title
+tagline: Red Team Operator | Bug Hunter.  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   Love to share my knowledge on hacking-related stuff
@@ -18,7 +18,7 @@ description: >-                        # used by seo meta and the atom feed
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'protocol://domain'
 
-author: kleiton0x00                  # change to your full name
+author: kleiton0x7e                  # change to your full name
 
 avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
