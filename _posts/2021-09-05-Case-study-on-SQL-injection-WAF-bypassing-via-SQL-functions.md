@@ -132,12 +132,8 @@ http://website.com/index.php?id=1 div (0*1337-0) Union Select "(0*1337-0) div (0
 Since 0xHEX values are accepted and widely used in SQL Queries and Injection payloads, it is a great way to bypass static-based Firewalls. Using this technique, it is possible to avoid using words such as **NULL**, **false**, or ‘ (single quotes). Below are existing payload, but their respective values are converted to 0xHEX format.
 
 ```
-SELECT
-SELECT
-SELECT
-SELECT
-CHAR(NULL); → SELECT CHAR(0x4e554c4c);
-CHAR(0) → SELECT CHAR(0x30);
-MOD(29, 9); → SELECT MOD(0x3239, 0x34);
-POINT(29, 9); → SELECT POINT(0x3239, 0x39);
+SELECT CHAR(NULL); → SELECT CHAR(0x4e554c4c);
+SELECT CHAR(0) → SELECT CHAR(0x30);
+SELECT MOD(29, 9); → SELECT MOD(0x3239, 0x34);
+SELECT POINT(29, 9); → SELECT POINT(0x3239, 0x39);
 ```
