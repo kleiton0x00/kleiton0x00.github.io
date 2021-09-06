@@ -24,14 +24,16 @@ What I tried was website.com/admin/index.php?msg=Hello World
 Now we see that every input we enter, gets reflected into that Red-Fonted text.
 What if I try injecting some HTML tags?
 
->?msg=<h1>Hello World</h1>
+```html
+?msg=<h1>Hello World</h1>
+```
 
 ![admin_panel_html_injection](https://cdn-images-1.medium.com/max/800/1*jSHoRXnO1hXGwybabEV23w.png)
 
 We got a successful HTML Injection, now its time to put some Javascript code.
 I tried more than 50 basic XSS payloads, with a hope for XSS to popup:
 
-```
+```html
 ?msg=<script>alert(1)</script>
 ?msg=<img src=xss onerror=alert(1)>
 ?msg=<input/onmouseover="javaSCRIPT&colon;confirm&lpar;1&rpar;"
@@ -50,15 +52,17 @@ By entering more than 50 XSS Payloads, I came up to a conclusion of what WAF was
 So how will we popup a XSS when alert() was filtered out?
 While guessing, I realised that **<img** wasn't filtered out, so I start making more complex payload based on that:
 
->?msg=<img/src=`%00`%20onerror=this.onerror=confirm(1)
-was my next payload, it got reflected but no XSS
+```html
+?msg=<img/src=`%00`%20onerror=this.onerror=confirm(1)
+```
+This was my next payload, it got reflected but no XSS unfortunately.
 
 ![admin_panel_image_tag](https://cdn-images-1.medium.com/max/800/1*v7bT00oMPvyuR34e0XpM_g.png)
 
 Seems like XSS by image isn't the right path so I kept enumerating more, since it gets reflected, but it doesn't execute anything inside it.
 Soon, I realised that ```<svg>``` wasn't filtered out, so I kept following this path. Since alert( ) is blocked, I'm trying confirm( ) since it worked.
 
-```
+```html
 <svg><script%20?>confirm(1)
 ```
 
@@ -66,7 +70,7 @@ Soon, I realised that ```<svg>``` wasn't filtered out, so I kept following this 
 
 I had a feeling I was close since it reflected a blank space, I just have to keep going on more. Since there is a WAF, I tried different bypasses, including Base64 decode with eval.atob. I kept using ```<svg>``` since It somehow worked.
 
-```
+```html
 <svg/onload=eval(atob('YWxlcnQoJ1hTUycp'))>
 ```
 This payload basically decode the base64 value which is alert('XSS'). I immediately fired up the payload and, guess what I see, a XSS!!!
@@ -75,7 +79,7 @@ This payload basically decode the base64 value which is alert('XSS'). I immediat
 
 Encoding a XSS payload (which was filtered out by WAF) into a base64, it really gave me the freedom to execute whatever I want.
 
-```
+```html
 <svg/onload=eval(atob('YWxlcnQoZG9jdW1lbnQuY29va2llKQ=='))>
 ```
 
