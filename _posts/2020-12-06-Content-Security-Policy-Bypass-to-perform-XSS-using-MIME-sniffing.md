@@ -18,7 +18,7 @@ Instead of giving a string value, let's try inputting an HTML simple payload. I 
 ![html_injection](https://cdn-images-1.medium.com/max/800/1*KHg8oSA8vM5gLAZnQHomdg.jpeg)
 
 Cool, we have HTML Injection, so let's try to leverage it into XSS. This time I entered the simplest XSS payload ever: 
-```
+```html
 <script>alert(1)</script>
 ```
 
@@ -64,7 +64,7 @@ Instead of entering a simple string, let's try to break the js string. How to do
 Add **);** to close the current Javascript code in the 2nd  line. The bracked ) will close the variable value and the ; will close the current javascript code in the 2nd line. Because the code is closed, we can add a new Javascript code, which of course is our malicious code, in our case **alert(1);**
 
 Unfortunately there is codes left on the same line:  
-```
+```javascript
 *1000).getTime();
 ```
 
@@ -72,7 +72,7 @@ How to get rid of those? Easy, simply by commenting. So, at the end of our input
 
 Our final payload would be:
 
-```
+```javascript
 );alert(1);//
 ```
 
@@ -81,7 +81,7 @@ Our final payload would be:
 Great, based on the source code, we have injected successfully a Javascript code to the directory. We got a second XSS!
 
 So the full URL would be: 
-```
+```http
 http://website.com/js/countdown.php?end=2534926825);alert(1);//
 ```
 
@@ -98,13 +98,13 @@ Let’s see how MIME sniffing can result in a XSS vulnerability. For an attacker
 - The attacker should be able to introduce an executable context via HTML injection or Javascript Injection (the first XSS which we found)
 
 Our XSS payload will be based on what we found on the first XSS. Instead of executing a Javascript, we will load the URL of countdown.php which is:
-```
+```http
 http://website.com/js/countdown.php?end=2534926825);alert(1);//
 ```
 
 So, combining the XSS payload of the first one with the URL of the vulnerable php file, our final payload will be:
 
-```
+```html
 <script src='http://website.com/js/countdown.php?end=2534926825);alert(1);//></script>
 ```
 
