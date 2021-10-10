@@ -21,7 +21,7 @@ echo 'https://grey-acoustics.surge.sh' | ./ppmap
 
 Great, let's open the website with the payload that the tool displayed as vulnerable (**https://grey-acoustics.surge.sh/?constructor%5Bprototype%5D%5Bppmap%5D=reserved**) and open the Console (on Developer Tools) to confirm if we successfully polluted that.
 
-[successfully_polluted](https://cdn-images-1.medium.com/max/800/1*I4GivnOTXkXkcV9bklApKg.png)
+![successfully_polluted](https://cdn-images-1.medium.com/max/800/1*I4GivnOTXkXkcV9bklApKg.png)
 
 It's time to find the vulnerable code, so to do that we need to go to **Source** and set a breakpoint on the first script of the page. The reason to do this is that we don't want the whole Javascript executed because then we won't know when ppmap gadget will be polluted. After setting a breakpoint, click on "Resume Script Execution" button. Simply refresh the website to apply the changes, and the website should be **Paused on debugger**.
 
