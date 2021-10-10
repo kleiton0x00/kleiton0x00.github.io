@@ -8,7 +8,7 @@ updated: 2021-10-09 01:13
 It's been months since I have released [ppmap](https://github.com/kleiton0x00/ppmap) and it didn't take much for the tool to be popular because of how crazy and trending Prototype Pollution vulnerability actually is.
 On this article I'm not going to introduce you what Prototype Pollution is, since there are a lot of articles/videos out there which explain it better than me. This article is a work of several weeks of research on this topic, to bring you new and innovative ideas (well not all of them) on how to scan massively on Javascript Packages ([npm packages](https://www.npmjs.com/) as well)  and how to manual debug (for much complex Javascript code) to find the root cause of client-side Prototype Pollution.
 
-## Searching for Prototype Pollution
+## Searching for client-side Prototype Pollution
 
 Well for this type of hunting we are going to use Chrome/Chromium, since they have the Developer Tools which is for sure more compatible for debugging.
 The exploitation starts by first finding is the website is vulnerable to client-side prototype pollution or not. We are going to use [ppmap](https://github.com/kleiton0x00/ppmap) which will automatically try different payloads to pollute the variables in global context. After downloading the tool to your local machine, simply run it on the target website by using the following command, simple as that:
@@ -33,7 +33,7 @@ In this case Line 7 would be the first executed javascript code so we will put a
 
 ![website_paused_on_debugger](https://cdn-images-1.medium.com/max/800/1*qERXAJFeF7xwuSjsdFCSpg.png)
 
-## Checking whenever the property gets polluted with a Snippet code 
+## Checking whenever the property gets polluted with the help of a Snippet code 
 
 Now we have to run a Snippet which you can get it from [here](https://gist.githubusercontent.com/dmethvin/1676346/raw/24cde96c341e524dc8706104afbd0748752c7432/gistfile1.txt). 
 
