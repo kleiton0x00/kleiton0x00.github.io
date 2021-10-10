@@ -83,7 +83,7 @@ But which one to choose? Most of the time Prototype Pollution happens on Javascr
 
 With the help of Beautifier, we can see the vulnerable code of the JS library:
 
-```
+```javascript
 params.replace(/\+/g, ' ').split('&').forEach(function(v) {
             var param = v.split('='),
                 key = decodeURIComponent(param[0]),
