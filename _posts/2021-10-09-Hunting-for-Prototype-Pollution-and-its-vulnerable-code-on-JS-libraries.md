@@ -27,11 +27,11 @@ Great, let's open the website with the payload that the tool displayed as vulner
 
 It's time to find the vulnerable code, so to do that we need to go to **Source** and set a breakpoint on the first script of the page. The reason to do this is that we don't want the whole Javascript executed because then we won't know when ppmap gadget will be polluted. After setting a breakpoint, click on "Resume Script Execution" button. Simply refresh the website to apply the changes, and the website should be **Paused on debugger**.
 
-![set_a_breakpoint_and_then_resume_script_execution](https://cdn-images-1.medium.com/max/800/1*052-ZnY-JWy6wiVfX_UGVQ.jpeg)
+![set_a_breakpoint_and_then_resume_script_execution](https://i.imgur.com/MRn1110.jpg)
 
 In this case Line 7 would be the first executed javascript code so we will put a breakpoint on that line. If we enter **ppmap** on console, it will be shown as undefined, since the website is stuck on breakpoint and ppmap is not polluted yet.
 
-![website_paused_on_debugger](https://cdn-images-1.medium.com/max/800/1*qERXAJFeF7xwuSjsdFCSpg.png)
+![website_paused_on_debugger](https://i.imgur.com/XzJIK3O.png)
 
 ## Checking whenever the property gets polluted with the help of a Snippet code 
 
@@ -79,7 +79,7 @@ Go back to **Sources** and click "Resume script execution". After you do that, t
 
 But which one to choose? Most of the time Prototype Pollution happens on Javascript libraries, so aim for the stack which is attached to the .js library files (look at the right side just like in the image to know which endpoint the stack is attached to). In this case we have 2 stacks on line 4 and 6, logically we will choose the 4th line because that line is the first time where Pollution happens, which mean that this line is the reason of the vulnerability. Clicking on the stack will redirect us to the vulnerable code.
 
-![analysing_part_1](https://cdn-images-1.medium.com/max/800/1*S8NBOl1a7f1zhJxlh-6g4w.jpeg)
+![analysing_part_1](https://i.imgur.com/dDADEL8.jpg)
 
 With the help of Beautifier, we can see the vulnerable code of the JS library:
 
@@ -102,7 +102,7 @@ params.replace(/\+/g, ' ').split('&').forEach(function(v) {
 
 This is not the only reason why the website is vulnerable, if we see closely on the Stacks, there is one more endpoint where ppmap is being polluted (which is located to the index HTML page):
 
-![analysing_part_2](https://cdn-images-1.medium.com/max/800/1*i_lq15EhvZRqb8GrF4_UEQ.jpeg)
+![analysing_part_2](https://i.imgur.com/2Mwzb6B.jpg)
 
 So here is the vulnerable code of the index HTML page:
 
