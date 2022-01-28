@@ -8,4 +8,4 @@ title: About
 # MIT License
 ---
 
-Kleiton Kurti is an Infosec Self-Learner, specifically a 20 years old Penetration Tester from Albania. During the last 2 years, he has been participating in different Cyber Security Events and Competitions. His aim is to give a huge contribution in Security System. Kleiton has been doing recently Bug Hunting & Penetration Softwares related to Web App Security with the aim of improving the overall security.
+I am a self-taught Infosec guy from Albania. In my free time I like to do security researches, solve CTFs and publish infosec articles about uncommon and creative bugs I find during pentesting engagements as well as creating offensive tools because of my passion for contributing to the infosec community.
