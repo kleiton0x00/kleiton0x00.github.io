@@ -1,7 +1,9 @@
 ---
-title: The more predictable you are, the less you get detected: hiding shellcode via Shannon encoding
+title: The more predictable you are, the less you get detected - hiding malicious shellcodes via Shannon encoding
 updated: 2022-05-30 12:44
 ---
+
+# The more predictable you are, the less you get detected
 
 Recently I publish a small [PoC](https://github.com/kleiton0x00/Shelltropy) on Github about a way of hiding malicious shellcode in PE by lowering its entropy.
 
