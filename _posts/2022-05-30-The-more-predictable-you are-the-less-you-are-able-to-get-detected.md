@@ -43,7 +43,7 @@ Because, after all, we need to restore the obfuscated code to what it was initia
 ## AV/EDR Scanning Results
 
 High-Entropy (left side) vs Low-Entropy (right side) default CS Shellcode integrated with Syscalls (Syswhispers2):  
-![results-side-by-side](https://github.com/kleiton0x00/Shelltropy/blob/main/Images/Results_together.jpg?raw=true)
+![results-side-by-side](https://i.imgur.com/ZXcGlDQ.jpg)
 
 ## Disadvantage
 
