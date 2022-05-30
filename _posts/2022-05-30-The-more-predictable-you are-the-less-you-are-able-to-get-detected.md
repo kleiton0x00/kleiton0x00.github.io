@@ -1,9 +1,9 @@
 ---
-title: The more predictable you are, the less you are able to get detected: hiding malicious shellcode via Shannon encoding
+title: The more predictable you are, the less you get detected: hiding shellcode via Shannon encoding
 updated: 2022-05-30 12:44
 ---
 
-Recently I publish a small PoC on Github about a way of hiding malicious shellcode in PE by lowering its entropy.
+Recently I publish a small [PoC](https://github.com/kleiton0x00/Shelltropy) on Github about a way of hiding malicious shellcode in PE by lowering its entropy.
 
 Entropy is the measure of the randomness in a set of data (here: shellcode). The higher the entropy, the more random the data is. Shannon Entropy is an algorithm that will produce a result between 0 and 8, where 8 means there is no pattern in the data, thereby it's very random and 0 means data follows a pattern.
 
