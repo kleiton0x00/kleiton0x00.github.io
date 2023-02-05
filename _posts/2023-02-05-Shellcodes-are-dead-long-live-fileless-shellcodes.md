@@ -131,6 +131,7 @@ void XOR(char* data, int len, unsigned char key) {
     for (i = 0; i < len; i++)
         data[i] ^= key;
 }
+```
 
 ## Profit
 
