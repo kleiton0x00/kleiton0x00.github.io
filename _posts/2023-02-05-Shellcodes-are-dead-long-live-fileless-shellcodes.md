@@ -29,7 +29,7 @@ On the photo below, there is a comparison between a traditional XORed encrypted 
 
 ![entropy_comparison](https://cdn-images-1.medium.com/max/800/1*5KjsCjd7bwYLlqjf-CGB2A.png)
 
-The full source code can be found [here](github.com/kleiton0x00/RemoteShellcodeExec/), but on this article I will try to break down the code for the sake of understanding.
+The full source code can be found [here](https://github.com/kleiton0x00/RemoteShellcodeExec/), but on this article I will try to break down the code for the sake of understanding.
 
 In order to request the shellcode from the HTTP Server, I will be using  `winhttp` library. Alternatively you can use sockets, based on some researches it might be a better solution which might results on lower runtime detection. The code below is a basic one (it's shorten for understanding purposes) for requesting and retrieving the HTTP Response body of the request (which is the raw shellcode), which basically is going to be stored on a vectored array:
 
@@ -137,4 +137,4 @@ void XOR(char* data, int len, unsigned char key) {
 1. Entropy is drastically reduced.
 2. No detection (Profit!)
 
-![profit_av_fud](https://i.imgur.com/U8LjkcA.mp4)
+https://i.imgur.com/U8LjkcA.mp4
