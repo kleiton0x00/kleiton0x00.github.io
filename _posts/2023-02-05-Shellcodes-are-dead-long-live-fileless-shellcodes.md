@@ -137,4 +137,4 @@ void XOR(char* data, int len, unsigned char key) {
 1. Entropy is drastically reduced.
 2. No detection (Profit!)
 
-https://i.imgur.com/U8LjkcA.mp4
+<video src="https://i.imgur.com/U8LjkcA.mp4" controls="controls"></video>
