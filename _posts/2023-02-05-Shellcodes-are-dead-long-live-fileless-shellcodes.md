@@ -133,9 +133,38 @@ void XOR(char* data, int len, unsigned char key) {
 }
 ```
 
+## Protect the heap at all cost
+
+Encrypting the heap is a good idea because it protects sensitive data that could be stored in the heap. This is especially important when a program is running in an untrusted environment, as any data stored in the heap could be analyzed by a malware analyser.
+
+```c
+// Encryption Key
+const char key[2] = "A";
+size_t keySize = sizeof(key);
+
+void xor_bidirectional_encode(const char* key, const size_t keyLength, char* buffer, const size_t length) {
+    for (size_t i = 0; i < length; ++i) {
+        buffer[i] ^= key[i % keyLength];
+    }
+}
+
+PROCESS_HEAP_ENTRY entry;
+void HeapEncryptDecrypt() {
+    SecureZeroMemory(&entry, sizeof(entry));
+    while (HeapWalk(GetProcessHeap(), &entry)) {
+        if ((entry.wFlags & PROCESS_HEAP_ENTRY_BUSY) != 0) {
+            xor_bidirectional_encode(key, keySize, (char*)(entry.lpData), entry.cbData);
+        }
+    }
+}
+```
+
+The **HeapWalk()** function is used to iterate through each heap entry in the process heap, and it is used to check whether the entry is busy. If it is busy, the xor_bidirectional_encode() function is used to encrypt and decrypt the entry. This is done by using the XOR operation to encrypt and decrypt the data.
+
 ## Profit
 
 1. Entropy is drastically reduced.
-2. No detection (Profit!)
+2. Heap is protected
+3. No detection (Profit!)
 
 <video src="https://i.imgur.com/U8LjkcA.mp4" controls="controls"></video>
