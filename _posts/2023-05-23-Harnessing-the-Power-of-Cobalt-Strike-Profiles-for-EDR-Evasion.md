@@ -357,7 +357,7 @@ We’ve added set `magic_pe` which changes the PE header magic bytes (and code t
 
 In order to bypass Sophos during the runtime execution, it is necessary to use all the options that are used on our [reference profile](https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile) plus our enhancements. This way we created a fully working beacon that bypasses Sophos EDR (remember that no encryption was used):
 
-https://whiteknightlabs.com/wp-content/uploads/2023/05/SophosEDR_bypass.webm
+![bypassing_sophos_without_encryption](https://whiteknightlabs.com/wp-content/uploads/2023/05/SophosEDR_bypass.webm)
 
 ## Conclusion
 
@@ -367,7 +367,7 @@ All the scripts and the final profiles used for bypasses are published in our [G
 
 ## References
 
-https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures
-https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar
-https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile
-https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/
+[https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures](https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures)
+[https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar](https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar)
+[https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile](https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile)
+[https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/](https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/)
