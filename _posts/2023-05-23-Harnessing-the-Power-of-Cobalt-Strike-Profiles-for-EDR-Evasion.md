@@ -367,7 +367,7 @@ All the scripts and the final profiles used for bypasses are published in our [G
 
 ## References
 
-[https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures](https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures)
-[https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar](https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar)
-[https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile](https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile)
-[https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/](https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/)
+[https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures](https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures)  
+[https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar](https://github.com/elastic/protections-artifacts/blob/main/yara/rules/Windows_Trojan_CobaltStrike.yar)  
+[https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile](https://github.com/xx0hcd/Malleable-C2-Profiles/blob/master/normal/amazon_events.profile)  
+[https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/](https://www.cobaltstrike.com/blog/cobalt-strike-and-yara-can-i-have-your-signature/)  

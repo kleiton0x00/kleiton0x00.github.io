@@ -148,6 +148,6 @@ All the scripts used in the article are published in our [Github repository](htt
 
 ## References
 
-[https://github.com/XiaoliChan/wmiexec-RegOut](https://github.com/XiaoliChan/wmiexec-RegOut)
-[https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-scheduledjob](https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-scheduledjob)
-[https://www.crowdstrike.com/blog/how-to-detect-and-prevent-impackets-wmiexec/](https://www.crowdstrike.com/blog/how-to-detect-and-prevent-impackets-wmiexec/)
+[https://github.com/XiaoliChan/wmiexec-RegOut](https://github.com/XiaoliChan/wmiexec-RegOut)  
+[https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-scheduledjob](https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-scheduledjob)  
+[https://www.crowdstrike.com/blog/how-to-detect-and-prevent-impackets-wmiexec/](https://www.crowdstrike.com/blog/how-to-detect-and-prevent-impackets-wmiexec/)  
