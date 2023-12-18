@@ -134,15 +134,17 @@ transform-x64 {
 
 ## Prepend OPCODES
 
-This option will append the opcodes you put in the profile in the beginning of the generated raw shellcode. So you must create a fully working shellcode in order not to crash the beacon when executed. Basically we have to create a junk assembly code that won’t affect the original shellcode. We can simply use a series of “0x90” (NOP) instructions, or even better, a dynamic combination of the following assembly instructions’ list:
+This option will append the opcodes you put in the profile in the beginning of the generated raw shellcode. So you must create a fully working shellcode in order not to crash the beacon when executed. Basically we have to create a junk assembly code that won’t affect the original shellcode. We can simply use a series of “0x90” (NOP) instructions, or even better, a dynamic combination of the following assembly instructions’ list. An easy example would be adding and subtracting a same value to different registers:
 
 ```asm
 inc esp
-inc eax
-dec ebx
-inc ebx
 dec esp
+inc ebx
+dec ebx
+inc eax
 dec eax
+dec rax
+inc rax
 nop
 xchg ax,ax
 nop dword ptr [eax]
@@ -150,6 +152,25 @@ nop word ptr [eax+eax]
 nop dword ptr [eax+eax]
 nop dword ptr [eax]
 nop dword ptr [eax]
+```
+
+Another set of junk instructions would be to write registers in the stack and restore them using `push` and `pop`:  
+```asm
+pushfq
+push rcx
+push rdx
+push r8
+push r9
+xor eax, eax
+xor eax, eax
+xor ebx, ebx
+xor eax, eax
+xor eax, eax
+pop r9
+pop r8
+pop rdx
+pop rcx
+popfq
 ```
 
 Pick a unique combination (by shuffling the instructions or by adding/removing them) and lastly, convert it to \x format to make it compatible with the profile. In this case, we took the instruction list as it is, so the final junky shellcode will look like the following when converted to the proper format:
