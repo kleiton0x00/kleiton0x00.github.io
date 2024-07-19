@@ -3,7 +3,7 @@ title: Harnessing the Power of Cobalt Strike Profiles for EDR Evasion
 updated: 2023-05-23 18:46
 ---
 
-Mirrored from [WKL Security](https://whiteknightlabs.com/2023/05/23/unleashing-the-unseen-harnessing-the-power-of-cobalt-strike-profiles-for-edr-evasion/)
+Mirrored from [WKL Security](https://whiteknightlabs.com/2023/05/23/unleashing-the-unseen-harnessing-the-power-of-cobalt-strike-profiles-for-edr-evasion/). This version is an update ahead.
 
 ## Introduction
 
@@ -59,20 +59,76 @@ During many test cases we realized that the beacon still gets detected even if i
 
 ![string_detection_example](https://whiteknightlabs.com/wp-content/uploads/2023/05/Screenshot-from-2023-05-06-01-36-33.png)
 
-This is indeed a string found in Beacon’s heap. The `obfuscate` option isn’t fully removing every possible string:
+This string is found on both Beacon's heap as well as the payload itself. The reason why `obfuscate` doesn't remove this string is because `msvcrt.dll` is a dynamically-linked DLL:
 
 ![malicious_strings_stored_in_beacons_heap](https://whiteknightlabs.com/wp-content/uploads/2023/05/Screenshot-from-2023-05-06-01-54-18.png)
 
-So let’s slightly modify our profile to remove such suspicious strings:
+The msvcrt.dll file is a part of the "Microsoft Visual Studio 6.0" and is crucial for most applications to work properly. It also contains program code that enables applications written in "Microsoft Visual C++" to run properly. Even though this DLL is a legit Windows DLL, Windows Defender consider it as malicious after a while. There are two ways (that I know) which can avoid the usage of `msvcrt.dll`, which will be described below.
 
+## Solution 1: Make the payload CRT library independent
+
+This solution is nothing new, there are plenty of shellcode-loaders on both [Linux](https://github.com/Cipher7/ApexLdr) and [Windows](https://github.com/NUL0x4C/AtomLdr) who archives this. To make the code CRT library independent, you need to manually define a series of function pointer types:
+
+```c
+typedef __time64_t  (WINAPI * _TIME64)   (__time64_t *_Time);
+typedef void        (WINAPI * _SRAND)   (unsigned int seed);
+typedef int         (WINAPI * _RAND)    (void);
+typedef void*       (WINAPI * _MEMSET)  (void* str, int ch, size_t n);
+typedef int         (WINAPI * _PRINTF)  (const char *format, ...);
+typedef int         (WINAPI * _SPRINTF) (char *str, const char *format, ...);
+typedef void*       (WINAPI * _MEMCPY)  (void *dest, const void * src, size_t n);
+typedef int         (WINAPI * _MEMCMP)  (const void *str1, const void *str2, size_t n);
+typedef size_t      (WINAPI * _STRLEN)  (const char *_Str);
+typedef void*       (WINAPI * _REALLOC) (void *_Memory,size_t _NewSize);
+typedef void*       (WINAPI * _MALLOC)  (size_t _Size);
+typedef wchar_t*    (WINAPI * _WCSCAT)  (wchar_t * __restrict__ _Dest,const wchar_t * __restrict__ _Source);
+typedef size_t      (WINAPI * _WCSLEN)  (const wchar_t *_Str);
 ```
-strrep "msvcrt.dll" "";
-strrep "C:\\Windows\\System32\\msvcrt.dll " "";
+
+Lastly, the APIS structure organizes these function pointers into groups and includes a handle to a DLL.
+```c
+typedef struct APIS {
+    struct msvcrt {
+        WIN32_FUNC(_time64)
+        WIN32_FUNC(srand)
+        WIN32_FUNC(rand)
+        WIN32_FUNC(memset)
+        WIN32_FUNC(memcpy)
+        WIN32_FUNC(memcmp)
+        //... define as many functions as you need from msvcrt.dll
+        WIN32_FUNC(strlen)
+        WIN32_FUNC(realloc)
+        WIN32_FUNC(malloc)
+        WIN32_FUNC(wcscat)
+        WIN32_FUNC(wcslen)
+        _PRINTF printf;
+        _SPRINTF sprintf;
+    }msvcrt;
+
+    struct handles {
+        HANDLE mscvtdll;
+    }handles;
+} APIS, *pAPIS;
+
+extern APIS apis;
 ```
 
-This didn’t help much as the strings were still found in the heap. We might need to take a different approach to solve this problem.
+The external declared variable `apis` of type `APIS` will allow access to the function pointers and handles organized in the APIS structure. This means we can now use the CRT functions like the example below:
 
-## Clang++ to the rescue
+```c
+APIS apis = { 0 };
+CHAR msvcrt_dll[] = {'m', 's', 'v', 'c', 'r', 't', '.', 'd', 'l', 'l', 0};
+apis.handles.mscvtdll = pLoadLibraryA(msvcrt_dll);
+apis.msvcrt.memset = (_MEMSET)GetProcAddressH(apis.handles.mscvtdll, HASH_memset);
+
+apis.msvcrt.memset(pRandBuffer,0, sBufferSize);
+```
+
+When using the `x86_64-w64-mingw32-gcc` compiler to prevent your application from dynamically linking to `msvcrt.dll`, you can append the `-static` flag. This flag directs the compiler to link against static versions of libraries. Additionally, the `-nostdlib` flag can be used to stop the compiler from linking the standard libraries and startup files, as the required msvcrt functions will be retrieved dynamically within the code. When using `-nostdlib`, it is necessary to manually link essential Windows system libraries by adding flags such as `-lkernel32` and `-luser32`.
+
+More details can be found on [ApexLdr](https://github.com/Cipher7/ApexLdr).
+
+## Solution 2: Clang++ to the rescue
 
 Different compilers have their own set of optimizations and flags that can be used to tailor the output for specific use cases. By experimenting with different compilers, users can achieve better performance and potentially bypass more AV/EDR systems.
 
